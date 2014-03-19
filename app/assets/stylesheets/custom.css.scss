@@ -1,0 +1,36 @@
+@import "bootstrap";
+
+$footerHeight: 60px;
+
+main {
+  background-color: initial;
+  width: initial;
+}
+
+.container .text-muted {
+  margin: ($footerHeight / 3) 0;
+}
+
+nav.navbar {
+  background-color: $gray-dark;
+}
+
+// Sticky Footer
+// =============
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: $footerHeight;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: $footerHeight;
+  background-color: $gray-lighter;
+}
