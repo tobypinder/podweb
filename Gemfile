@@ -12,6 +12,7 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'therubyracer', :platform=>:ruby
 gem 'thin'
+gem 'rails_12factor'
 group :production do
   gem 'pg'
 end
