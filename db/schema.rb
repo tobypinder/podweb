@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140320155728) do
+ActiveRecord::Schema.define(version: 20140320170533) do
+
+  create_table "podcasts", force: true do |t|
+    t.string   "name"
+    t.string   "feed_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email"
@@ -19,6 +26,11 @@ ActiveRecord::Schema.define(version: 20140320155728) do
     t.string   "uid"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "users_podcasts", force: true do |t|
+    t.integer "user_id"
+    t.integer "podcast_id"
   end
 
 end
