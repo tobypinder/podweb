@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
 
   has_and_belongs_to_many :podcasts
+  accepts_nested_attributes_for :podcasts
 
   validates_presence_of :email
 
