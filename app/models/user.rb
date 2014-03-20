@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  validates_presence_of :name
+  validates_presence_of :email
 
   def self.create_with_omniauth(auth)
     create! do |user|
