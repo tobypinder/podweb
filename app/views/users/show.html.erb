@@ -1,1 +1,5 @@
 <h3 class="text-center"><%= @user.email %></h3>
+
+<% if @user.podcasts.any? %>
+  <h2 class="text-center">Subscriptions</h2>
+<% end %>

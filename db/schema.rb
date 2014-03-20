@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140320170533) do
+ActiveRecord::Schema.define(version: 20140320175553) do
 
   create_table "podcasts", force: true do |t|
     t.string   "name"
@@ -20,17 +20,17 @@ ActiveRecord::Schema.define(version: 20140320170533) do
     t.datetime "updated_at"
   end
 
+  create_table "podcasts_users", force: true do |t|
+    t.integer "user_id"
+    t.integer "podcast_id"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email"
     t.string   "provider"
     t.string   "uid"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "users_podcasts", force: true do |t|
-    t.integer "user_id"
-    t.integer "podcast_id"
   end
 
 end
