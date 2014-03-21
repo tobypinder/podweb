@@ -6,7 +6,7 @@
   <h2 class="text-center">Subscriptions</h2>
   <% @user.podcasts.each do |podcast| %>
     <p class="text-center">
-      <%= podcast.feed_url %>
+      <%= link_to podcast.feed_url, podcast %>
       <%= link_to podcast, method: :delete, data: { confirm: "Unsubscribe?" }, title: podcast.name do %>
         <button type="button" class="close" aria-hidden="true">&times;</button>
       <% end %>
