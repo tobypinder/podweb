@@ -12,6 +12,8 @@ class PodcastsController < ApplicationController
   end
 
   def destroy
+    current_user.podcasts.delete(Podcast.find(params[:id]))
+    redirect_to current_user
   end
 
   private
