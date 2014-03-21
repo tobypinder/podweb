@@ -2,4 +2,9 @@
 <% @podcast.entries.each do |entry| %>
   <h4><%= entry.title %></h4>
   <pre><%= entry.inspect %></pre>
+  <% if defined? entry.enclosure_url %>
+    <a href="<%= entry.enclosure_url %>">Media</a>
+  <% elsif defined? entry.image %>
+    <a href="<%= entry.image %>">Media</a>
+  <% end %>
 <% end %>
