@@ -14,20 +14,24 @@ class SessionsController < ApplicationController
     reset_session
     session[:user_id] = user.id
     if user.email.blank?
-      redirect_to edit_user_path(user), :alert => "Please enter your email address."
+      flash[:warning] = "Please enter your email address."
+      redirect_to edit_user_path(user)
     else
-      redirect_to user, :notice => 'Signed in!'
+      flash[:success] = 'Signed in!'
+      redirect_to user
     end
 
   end
 
   def destroy
     reset_session
-    redirect_to root_url, :notice => 'Signed out!'
+    flash[:success] = 'Signed out!'
+    redirect_to root_url
   end
 
   def failure
-    redirect_to root_url, :alert => "Authentication error: #{params[:message].humanize}"
+    flash[:danger] = "Authentication error: #{params[:message].humanize}"
+    redirect_to root_url
   end
 
 end
