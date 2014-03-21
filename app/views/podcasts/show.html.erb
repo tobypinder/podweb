@@ -1,6 +1,5 @@
 <h3 class="text-center"><%= @podcast.title %></h3>
 <% @podcast.entries.each do |entry| %>
   <h4><%= entry.title %></h4>
-  <p><%= entry.summary %></p>
-  <a href="<%= entry.image %>">Media</a>
+  <pre><%= entry.inspect %></pre>
 <% end %>
