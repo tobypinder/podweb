@@ -4,13 +4,17 @@
 
 <% if @user.podcasts.any? %>
   <h2 class="text-center">Subscriptions</h2>
-  <% @user.podcasts.each do |userPodcast| %>
-    <% podcast = Feedjira::Feed.fetch_and_parse userPodcast.feed_url %>
-    <p class="text-center">
-      <%= link_to podcast.title, userPodcast %>
-      <%= link_to userPodcast, method: :delete, data: { confirm: "Unsubscribe?" }, title: podcast.title do %>
-        <button type="button" class="close" aria-hidden="true">&times;</button>
-      <% end %>
-    </p>
+  <% @user.podcasts.each do |podcast| %>
+    <% feed = Feedjira::Feed.fetch_and_parse podcast.feed_url %>
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <p class="text-center">
+          <%= link_to feed.title, podcast %>
+          <%= link_to podcast, method: :delete, data: { confirm: "Unsubscribe?" }, title: feed.title do %>
+            <button type="button" class="close" aria-hidden="true">&times;</button>
+          <% end %>
+        </p>
+      </div>
+    </div>
   <% end %>
 <% end %>

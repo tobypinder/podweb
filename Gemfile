@@ -12,7 +12,7 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'therubyracer', :platform=>:ruby
 gem 'thin'
-gem 'feedjira', '1.1.0'
+gem 'feedjira'
 group :production do
   gem 'pg'
   gem 'rails_12factor'
