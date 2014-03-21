@@ -1,5 +1,7 @@
 class PodcastsController < ApplicationController
 
+  require 'feed_validator'
+
   before_filter :authenticate_user!
 
   def show
@@ -7,10 +9,17 @@ class PodcastsController < ApplicationController
   end
 
   def create
-    if current_user.podcasts << Podcast.find_or_create_by(feed_url: params[:podcast][:feed_url])
-      flash[:success] = "Successfully Subscribed."
-    else
-      flash[:danger] = "There was an Error."
+    begin
+      v = W3C::FeedValidator.new()
+      if v.validate_url(params[:podcast][:feed_url]) && v.valid?
+        if current_user.podcasts << Podcast.find_or_create_by(feed_url: params[:podcast][:feed_url])
+          flash[:success] = "Successfully Subscribed."
+        else
+          flash[:danger] = "There was an Error."
+        end
+      end
+    rescue
+      flash[:danger] = "Invalid Url for Feed."
     end
     redirect_to current_user
   end

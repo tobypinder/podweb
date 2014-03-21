@@ -77,6 +77,7 @@ GEM
       curb (~> 0.8.1)
       loofah (~> 1.2.1)
       sax-machine (~> 0.2.1)
+    feedvalidator (0.1.2)
     ffi (1.9.3)
     formatador (0.2.4)
     guard (2.5.1)
@@ -256,6 +257,7 @@ DEPENDENCIES
   email_spec
   factory_girl_rails
   feedjira
+  feedvalidator
   guard-bundler
   guard-rails
   guard-rspec
