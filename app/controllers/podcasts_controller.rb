@@ -2,6 +2,10 @@ class PodcastsController < ApplicationController
 
   before_filter :authenticate_user!
 
+  def show
+    @podcast = Feedjira::Feed.fetch_and_parse(Podcast.find(params[:id]).feed_url)
+  end
+
   def create
     if current_user.podcasts << Podcast.find_or_create_by(feed_url: params[:podcast][:feed_url])
       flash[:success] = "Successfully Subscribed."
