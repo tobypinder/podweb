@@ -1,0 +1,7 @@
+<% feed = Feedjira::Feed.fetch_and_parse podcast.feed_url %>
+<div class="row">
+  <div class="col-xs-4 col-xs-offset-4">
+    <h4><%= link_to feed.title, podcast %></h4>
+    <p class="text-muted"><strong>Latest Episode</strong>&nbsp;<%= feed.entries.first.title %></p>
+  </div>
+</div>

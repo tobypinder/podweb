@@ -2,7 +2,11 @@ class PodcastsController < ApplicationController
 
   require 'feed_validator'
 
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, only: [ :create, :destroy ]
+
+  def index
+    @podcasts = Podcast.all
+  end
 
   def show
     @podcast = Feedjira::Feed.fetch_and_parse(Podcast.find(params[:id]).feed_url)
