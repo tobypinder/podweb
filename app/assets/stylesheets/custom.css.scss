@@ -11,8 +11,7 @@ body {
   margin-bottom: $footerHeight;
 }
 
-main {
-  @extend .container;
+#main {
   background-color: initial;
   width: initial;
 }
