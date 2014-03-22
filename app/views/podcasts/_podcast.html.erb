@@ -1,4 +1,4 @@
-<% feed = Feedjira::Feed.fetch_and_parse podcast.feed_url %>
+<% feed = get_feed(podcast) %>
 <div class="row">
   <div class="col-xs-4 col-xs-offset-4">
     <% if user_signed_in? && current_user.podcasts.include?(podcast) %>

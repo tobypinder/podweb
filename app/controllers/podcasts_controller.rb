@@ -1,5 +1,6 @@
 class PodcastsController < ApplicationController
 
+  include PodcastsHelper
   require 'feed_validator'
 
   before_filter :authenticate_user!, only: [ :create, :destroy ]
@@ -10,11 +11,14 @@ class PodcastsController < ApplicationController
   end
 
   def show
-    @podcast = Feedjira::Feed.fetch_and_parse(Podcast.find(params[:id]).feed_url)
+    @feed = get_feed(Podcast.find(params[:id]))
   end
 
   def create
-    if current_user.podcasts << Podcast.find_or_create_by(feed_url: params[:podcast][:feed_url])
+    if podcast = Podcast.find_or_create_by(feed_url: params[:podcast][:feed_url])
+      podcast.raw_feed = Feedjira::Feed.fetch_raw podcast.feed_url
+      podcast.save
+      current_user.podcasts << podcast
       flash[:success] = "Successfully Subscribed."
     else
       flash[:danger] = "There was an Error."
