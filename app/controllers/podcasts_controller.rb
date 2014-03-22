@@ -16,14 +16,17 @@ class PodcastsController < ApplicationController
 
   def create
     if podcast = Podcast.find_or_create_by(feed_url: params[:podcast][:feed_url])
-      podcast.raw_feed = Feedjira::Feed.fetch_raw podcast.feed_url
-      podcast.save
-      current_user.podcasts << podcast
-      flash[:success] = "Successfully Subscribed."
+      get_feed(podcast)
+      subscribe_to_podcast(podcast)
     else
-      flash[:danger] = "There was an Error."
+      flash[:danger] = "There was an error finding or creating the Podcast."
+      redirect_to current_user
     end
-    redirect_to current_user
+  end
+
+  def update
+    podcast = Podcast.find(params[:podcast][:id])
+    subscribe_to_podcast(podcast)
   end
 
   def destroy
@@ -54,5 +57,14 @@ class PodcastsController < ApplicationController
         flash[:danger] = "Exception caught when trying to add Podcast."
         redirect_to current_user
       end
+    end
+
+    def subscribe_to_podcast(podcast)
+      if current_user.podcasts << podcast
+        flash[:success] = "Successfully subscribed."
+      else
+        flash[:danger] = "There was an error subscribing to the Podcast."
+      end
+      redirect_to current_user
     end
 end
