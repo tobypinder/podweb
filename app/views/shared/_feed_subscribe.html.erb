@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-lg-6 col-lg-offset-3">
-    <%= form_for @podcast, class: "form-inline", role: "form" do |f| %>
+    <%= form_for Podcast.new, class: "form-inline", role: "form" do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <div class="input-group">
         <%= f.label :feed_url, class: "sr-only" %>
