@@ -18,7 +18,7 @@
             <li><%= link_to current_user.email, current_user %></li>
             <li><%= link_to 'Logout', signout_path %></li>
           <% else %>
-            <li><%= link_to image_tag(image_path('gplus_signin.png'), class: "gplus-signin"), signin_path %></li>
+            <li><%= link_to "", signin_path, class: "gplus-signin" %></li>
           <% end %>
         </ul>
       </div>

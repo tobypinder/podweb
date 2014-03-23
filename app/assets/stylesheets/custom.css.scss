@@ -14,9 +14,17 @@ body {
 nav.navbar {
   background-color: $gray-dark;
   .gplus-signin {
-    height: 50px;
-    margin-top: -15px;
-    margin-bottom: -15px;
+    width: 89px;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-image: image-url("gplus_signin.png");
+    &:hover {
+      background-image: image-url("gplus_signin_hover.png");
+    }
+    &:active {
+      background-image: image-url("gplus_signin_press.png");
+    }
   }
 }
 
