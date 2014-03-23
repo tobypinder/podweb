@@ -1,3 +1,7 @@
 <h3 class="text-center">Podcast Library</h3>
 <br />
+<% if user_signed_in? %>
+  <%= render 'shared/feed_subscribe' %>
+  <br />
+<% end %>
 <%= render @podcasts %>
