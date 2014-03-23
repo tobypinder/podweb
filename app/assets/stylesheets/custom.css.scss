@@ -20,6 +20,16 @@ img {
   margin: 0 auto;
 }
 
+a {
+  .well {
+    color: $gray-dark;
+  }
+  &:hover {
+    color: $gray-dark;
+    text-decoration: none;
+  }
+}
+
 #footer {
   position: absolute;
   bottom: 0;

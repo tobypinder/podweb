@@ -1,9 +1,38 @@
-<h3 class="text-center"><%= entry.title %></h3>
-<p class="text-center">
-  <% if defined? entry.enclosure_url %>
-    <a href="<%= entry.enclosure_url %>">Media</a>
-  <% elsif defined? entry.image %>
-    <a href="<%= entry.image %>">Media</a>
-  <% end %>
-</p>
-<p><%= truncate(entry.summary, length: 250) %></p>
+<% uid = entry.published.ago(DateTime.now) %>
+<div class="row">
+  <div class="col-md-12">
+    <h3 class="text-center"><%= entry.title %></h3>
+    <p class="text-center">
+      <% if defined? entry.enclosure_url %>
+        <a href="<%= entry.enclosure_url %>">Media</a>
+      <% elsif defined? entry.image %>
+        <a href="<%= entry.image %>">Media</a>
+      <% end %>
+    </p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <a data-toggle="modal" data-target="#full-entry-<%= uid %>">
+      <div class="well"><%= truncate(strip_tags(entry.summary), length: 250) %></div>
+    </a>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="full-entry-<%= uid %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-<%= uid %>" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel-<%= uid %>"><%= entry.title %></h4>
+      </div>
+      <div class="modal-body">
+        <%= raw entry.summary %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
