@@ -4,7 +4,7 @@
 
 <% if @user.podcasts.any? %>
   <h2 class="text-center">Subscriptions</h2>
-  <% @user.podcasts.each do |podcast| %>
+  <% @user.podcasts.sort_by { |podcast| get_feed(podcast).title.sub(/^(the|a|an)\s+/i, '') }.each do |podcast| %>
     <%= render podcast %>
   <% end %>
 <% end %>
