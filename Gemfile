@@ -14,6 +14,7 @@ gem 'therubyracer', :platform=>:ruby
 gem 'thin'
 gem 'feedjira'
 gem 'feedvalidator'
+gem 'mediaelement_rails'
 group :production do
   gem 'pg'
   gem 'rails_12factor'

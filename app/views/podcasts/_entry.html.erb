@@ -1,23 +1,43 @@
-<% uid = entry.published.to_i %>
-<div class="row">
-  <div class="col-md-12">
-    <h3 class="text-center"><%= entry.title %></h3>
-    <p class="text-center">
-      <% if defined? entry.enclosure_url %>
-        <a href="<%= entry.enclosure_url %>">Media</a>
-      <% elsif defined? entry.image %>
-        <a href="<%= entry.image %>">Media</a>
-      <% end %>
-    </p>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <a data-toggle="modal" data-target="#full-entry-<%= uid %>">
-      <div class="well"><%= truncate(strip_tags(entry.summary), length: 250) %></div>
-    </a>
-  </div>
-</div>
+<%
+  uid = entry.published.to_i
+  media_file = nil
+  if defined? entry.enclosure_url
+    media_file = entry.enclosure_url
+  elsif defined? entry.image
+    media_file = entry.image
+  end
+%>
+
+<h3 class="text-center"><%= entry.title %></h3>
+<% unless media_file.blank? %>
+  <% case File.extname(media_file) %>
+  <% when '.mp3' %>
+    <%= audio_tag media_file, id: "audio-player-#{uid}", style: "width: 100%;" %>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('#audio-player-<%= uid %>').mediaelementplayer({
+          features: ['playpause', 'current', 'progress', 'duration', 'volume']
+        });
+      });
+    </script>
+  <% when '.mp4' %>
+    <%= video_tag media_file, id: "video-player-#{uid}", style: "width: 100%; height: 100%;" %>
+    <script type="text/javascript">
+      $(document).ready(function() {
+          $('#video-player-<%= uid %>').mediaelementplayer({
+            features: ['playpause', 'current', 'progress', 'duration', 'volume', 'fullscreen']
+          });
+      });
+    </script>
+  <% else %>
+    <p class="text-center"><a href="<%= media_file %>">Media File&nbsp;(<%= File.extname(media_file) %>)</a></p>
+  <% end %>
+<% end %>
+
+<br />
+<a data-toggle="modal" data-target="#full-entry-<%= uid %>">
+  <div class="well"><%= truncate(strip_tags(entry.summary), length: 250) %></div>
+</a>
 
 <!-- Modal -->
 <div class="modal fade" id="full-entry-<%= uid %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-<%= uid %>" aria-hidden="true">
