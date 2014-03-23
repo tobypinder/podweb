@@ -7,7 +7,7 @@ class PodcastsController < ApplicationController
   before_filter :validate_podcast, only: [ :create ]
 
   def index
-    @podcasts = Podcast.all
+    @podcasts = Podcast.all.sort_by { |podcast| get_feed(podcast).title }
   end
 
   def show
