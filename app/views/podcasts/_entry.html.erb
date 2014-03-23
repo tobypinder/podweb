@@ -1,0 +1,9 @@
+<h3 class="text-center"><%= entry.title %></h3>
+<p class="text-center">
+  <% if defined? entry.enclosure_url %>
+    <a href="<%= entry.enclosure_url %>">Media</a>
+  <% elsif defined? entry.image %>
+    <a href="<%= entry.image %>">Media</a>
+  <% end %>
+</p>
+<p><%= truncate(entry.summary, length: 250) %></p>
