@@ -7,6 +7,7 @@ module PodcastsHelper
       podcast.save
     end
 
+    Feedjira::Feed.add_common_feed_element("itunes:image", :value => :href, :as => :album_art_url)
     Feedjira::Feed.add_common_feed_entry_element("enclosure", :value => :url, :as => :enclosure_url)
     return Feedjira::Feed.parse podcast.raw_feed
   end
