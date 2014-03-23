@@ -20,7 +20,7 @@
         });
       });
     </script>
-  <% when '.mp4' %>
+  <% when '.mp4', '.m4v' %>
     <%= video_tag media_file, id: "video-player-#{uid}", style: "width: 100%; height: 100%;" %>
     <script type="text/javascript">
       $(document).ready(function() {

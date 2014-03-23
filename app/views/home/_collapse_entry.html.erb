@@ -1,0 +1,71 @@
+<%
+  entry = collapse_entry
+  uid = entry.published.to_i
+  media_file = nil
+  if defined? entry.enclosure_url
+    media_file = entry.enclosure_url
+  elsif defined? entry.image
+    media_file = entry.image
+  end
+%>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= uid %>">
+        <%= entry.title %>
+      </a>
+    </h4>
+  </div>
+  <div id="collapse-<%= uid %>" class="panel-collapse collapse">
+    <div class="panel-body">
+      <% unless media_file.blank? %>
+        <% case File.extname(media_file) %>
+        <% when '.mp3' %>
+          <%= audio_tag media_file, id: "audio-player-#{uid}", style: "width: 100%;" %>
+          <script type="text/javascript">
+            $(document).ready(function() {
+              $('#audio-player-<%= uid %>').mediaelementplayer({
+                features: ['playpause', 'current', 'progress', 'duration', 'volume']
+              });
+            });
+          </script>
+        <% when '.mp4', '.m4v' %>
+          <%= video_tag media_file, id: "video-player-#{uid}", style: "width: 100%; height: 100%;" %>
+          <script type="text/javascript">
+            $(document).ready(function() {
+                $('#video-player-<%= uid %>').mediaelementplayer({
+                  features: ['playpause', 'current', 'progress', 'duration', 'volume', 'fullscreen']
+                });
+            });
+          </script>
+        <% else %>
+          <p class="text-center"><a href="<%= media_file %>">Media File&nbsp;(<%= File.extname(media_file) %>)</a></p>
+        <% end %>
+      <% end %>
+
+      <br />
+      <a data-toggle="modal" data-target="#full-entry-<%= uid %>">
+        <div class="well"><%= truncate(strip_tags(entry.summary), length: 250) %></div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="full-entry-<%= uid %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-<%= uid %>" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel-<%= uid %>"><%= entry.title %></h4>
+      </div>
+      <div class="modal-body">
+        <%= raw entry.summary %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

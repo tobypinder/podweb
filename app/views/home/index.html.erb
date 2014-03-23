@@ -1,3 +1,17 @@
-<h2 class="text-center">Welcome to Podweb</h2>
-<br />
-<h4 class="text-center">Podweb is in the extremely early stages of development to become a browser-based podcast manager.</h4>
+<% if user_signed_in? %>
+  <h1 class="text-center">Hey look, you're signed in!</h1>
+  <h3 class="text-center text-muted">Here's a list of episodes from your subscribed podcasts, sorted by day</h3>
+  <br />
+  <% @entry_list_by_day.each do |date, entry_list| %>
+    <hr />
+    <h2 class="text-center"><%= date %></h2>
+    <hr />
+    <div class="panel-group" id="accordion">
+      <%= render partial: 'collapse_entry', collection: entry_list %>
+    </div>
+  <% end %>
+<% else %>
+  <h2 class="text-center">Welcome to Podweb</h2>
+  <br />
+  <h4 class="text-center">Podweb is in the extremely early stages of development to become a browser-based podcast manager.</h4>
+<% end %>
