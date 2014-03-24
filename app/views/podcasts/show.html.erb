@@ -2,6 +2,7 @@
   <div class="col-md-8 col-md-offset-2">
     <h2 class="text-center"><%= @feed.title %></h2>
     <br />
-    <%= render partial: 'entry', collection: @feed.entries %>
+    <%= render partial: 'entry', collection: @entries %>
+    <div class="pagination-holder"><%= will_paginate @entries %></div>
   </div>
 </div>

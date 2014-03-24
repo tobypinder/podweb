@@ -14,6 +14,7 @@ gem 'therubyracer', :platform=>:ruby
 gem 'thin'
 gem 'feedjira'
 gem 'feedvalidator'
+gem 'will_paginate-bootstrap'
 group :production do
   gem 'pg'
   gem 'rails_12factor'

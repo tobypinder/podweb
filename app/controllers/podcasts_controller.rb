@@ -1,17 +1,19 @@
 class PodcastsController < ApplicationController
 
-  include PodcastsHelper
+  require 'will_paginate/array'
   require 'feed_validator'
+  include PodcastsHelper
 
   before_filter :authenticate_user!, only: [ :create, :destroy ]
   before_filter :validate_podcast, only: [ :create ]
 
   def index
-    @podcasts = Podcast.all.sort_by { |podcast| get_feed(podcast).title.sub(/^(the|a|an)\s+/i, '') }
+    @podcasts = Podcast.all.sort_by { |podcast| get_feed(podcast).title.sub(/^(the|a|an)\s+/i, '') }.paginate(page: params[:page], per_page: 10)
   end
 
   def show
     @feed = get_feed(Podcast.find(params[:id]))
+    @entries = @feed.entries.paginate(page: params[:page], per_page: 3)
   end
 
   def create

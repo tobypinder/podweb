@@ -10,6 +10,7 @@
       <%= render partial: 'collapse_entry', collection: entry_list %>
     </div>
   <% end %>
+  <div class="pagination-holder"><%= will_paginate @entry_list_by_day %></div>
 <% else %>
   <h2 class="text-center">Welcome to Podweb</h2>
   <br />

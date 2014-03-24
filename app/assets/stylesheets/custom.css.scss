@@ -19,14 +19,6 @@ nav.navbar {
     margin-top: 10px;
     margin-bottom: 10px;
     background-image: image-url("gplus_signin.png");
-    /*
-    &:hover {
-      background-image: image-url("gplus_signin_hover.png");
-    }
-    &:active {
-      background-image: image-url("gplus_signin_press.png");
-    }
-    */
   }
 }
 
@@ -52,6 +44,11 @@ a {
     color: $gray-dark;
     text-decoration: none;
   }
+}
+
+.pagination-holder {
+  @extend .center-block;
+  @extend .text-center;
 }
 
 #footer {
