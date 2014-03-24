@@ -19,18 +19,29 @@ nav.navbar {
     margin-top: 10px;
     margin-bottom: 10px;
     background-image: image-url("gplus_signin.png");
+    /*
     &:hover {
       background-image: image-url("gplus_signin_hover.png");
     }
     &:active {
       background-image: image-url("gplus_signin_press.png");
     }
+    */
   }
 }
 
 img {
   @extend .img-responsive;
   margin: 0 auto;
+}
+
+audio {
+  width: 100%;
+}
+
+video {
+  width: 100%;
+  height: 100%;
 }
 
 a {

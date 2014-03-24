@@ -12,23 +12,9 @@
 <% unless media_file.blank? %>
   <% case File.extname(media_file) %>
   <% when '.mp3' %>
-    <%= audio_tag media_file, id: "audio-player-#{uid}", style: "width: 100%;" %>
-    <script type="text/javascript">
-      $(document).ready(function() {
-        $('#audio-player-<%= uid %>').mediaelementplayer({
-          features: ['playpause', 'current', 'progress', 'duration', 'volume']
-        });
-      });
-    </script>
+    <%= audio_tag media_file, id: "audio-player-#{uid}", controls: "controls" %>
   <% when '.mp4', '.m4v' %>
-    <%= video_tag media_file, id: "video-player-#{uid}", style: "width: 100%; height: 100%;" %>
-    <script type="text/javascript">
-      $(document).ready(function() {
-          $('#video-player-<%= uid %>').mediaelementplayer({
-            features: ['playpause', 'current', 'progress', 'duration', 'volume', 'fullscreen']
-          });
-      });
-    </script>
+    <%= video_tag media_file, id: "video-player-#{uid}", controls: "controls" %>
   <% else %>
     <p class="text-center"><a href="<%= media_file %>">Media File&nbsp;(<%= File.extname(media_file) %>)</a></p>
   <% end %>
