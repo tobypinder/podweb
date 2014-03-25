@@ -1,11 +1,13 @@
 <%
-  entry = collapse_entry
-  uid = entry.published.to_i
-  media_file = nil
-  if defined? entry.enclosure_url
-    media_file = entry.enclosure_url
-  elsif defined? entry.image
-    media_file = entry.image
+  episode = collapse_episode
+  uid = episode.published.to_i
+
+  if defined? episode.enclosure_url
+    media_url = episode.enclosure_url
+  elsif defined? episode.image
+    media_file = episode.image
+  else
+    media_url = nil
   end
 %>
 
@@ -13,26 +15,28 @@
   <div class="panel-heading">
     <h4 class="panel-title">
       <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= uid %>">
-        <%= entry.title %>
+        <%= episode.title %>
       </a>
     </h4>
   </div>
   <div id="collapse-<%= uid %>" class="panel-collapse collapse">
     <div class="panel-body">
-      <% unless media_file.blank? %>
-        <% case File.extname(media_file) %>
+      <% if !media_url.blank? %>
+        <% case File.extname(media_url) %>
         <% when '.mp3' %>
-          <%= audio_tag media_file, id: "audio-player-#{uid}", controls: "controls" %>
+          <%= audio_tag media_url, id: "audio-player-#{uid}", controls: "controls" %>
         <% when '.mp4', '.m4v' %>
-          <%= video_tag media_file, id: "video-player-#{uid}", preload: "metadata", controls: "controls" %>
+          <%= video_tag media_url, id: "video-player-#{uid}", preload: "metadata", controls: "controls" %>
         <% else %>
-          <p class="text-center"><a href="<%= media_file %>">Media File&nbsp;(<%= File.extname(media_file) %>)</a></p>
+          <p class="text-center"><a href="<%= media_url %>">Media File&nbsp;(<%= File.extname(media_url) %>)</a></p>
         <% end %>
+      <% else %>
+        <p class="text-center">Oh noes! Couldn't figure out media url!</p>
       <% end %>
 
       <br />
       <a data-toggle="modal" data-target="#full-entry-<%= uid %>">
-        <div class="well"><%= truncate(strip_tags(entry.summary), length: 250) %></div>
+        <div class="well"><%= truncate(strip_tags(episode.summary), length: 250) %></div>
       </a>
     </div>
   </div>
@@ -44,10 +48,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel-<%= uid %>"><%= entry.title %></h4>
+        <h4 class="modal-title" id="myModalLabel-<%= uid %>"><%= episode.title %></h4>
       </div>
       <div class="modal-body">
-        <%= raw entry.summary %>
+        <%= raw episode.summary %>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

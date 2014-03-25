@@ -1,16 +1,15 @@
-<% feed = get_feed(podcast) %>
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
 
     <div class="row">
 
       <div class="col-md-2">
-        <%= link_to image_tag(feed.album_art_url), podcast %>
+        <%= link_to image_tag(podcast.album_art_url), podcast %>
       </div>
 
       <div class="col-md-7">
-        <h4><%= link_to feed.title, podcast %></h4>
-        <p class="text-muted"><strong>Latest Episode</strong>&nbsp;<%= feed.entries.first.title %></p>
+        <h4><%= link_to podcast.title, podcast %></h4>
+        <p class="text-muted"><strong>Latest Episode</strong>&nbsp;<%= podcast.episodes.first.title %></p>
       </div>
 
       <div class="col-md-3">
