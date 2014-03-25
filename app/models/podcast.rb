@@ -25,6 +25,7 @@ class Podcast < ActiveRecord::Base
   end
 
   def update_details
+    Feedjira::Feed.add_common_feed_entry_element("enclosure", :value => :url, :as => :enclosure_url)
     self.save if self.updated_at < (DateTime.now - 3.hours)
   end
 end
