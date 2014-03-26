@@ -25,11 +25,6 @@ class PodcastsController < ApplicationController
     end
   end
 
-  def update
-    podcast = Podcast.find(params[:podcast][:id])
-    subscribe_to_podcast(podcast)
-  end
-
   def destroy
     current_user.podcasts.delete(Podcast.find(params[:id]))
     redirect_to current_user

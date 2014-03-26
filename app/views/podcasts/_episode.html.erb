@@ -1,24 +1,16 @@
 <%
-  uid = episode.published.to_i
-
-  if defined? episode.enclosure_url
-    media_url = episode.enclosure_url
-  elsif defined? episode.image
-    media_file = episode.image
-  else
-    media_url = nil
-  end
+  uid = episode.publish_date.to_i
 %>
 
 <h3 class="text-center"><%= episode.title %></h3>
-<% if !media_url.blank? %>
-  <% case File.extname(media_url) %>
+<% if !episode.media_url.blank? %>
+  <% case File.extname(episode.media_url) %>
   <% when '.mp3' %>
-    <%= audio_tag media_url, id: "audio-player-#{uid}", controls: "controls" %>
+    <%= audio_tag episode.media_url, id: "audio-player-#{uid}", controls: "controls" %>
   <% when '.mp4', '.m4v' %>
-    <%= video_tag media_url, id: "video-player-#{uid}", preload: "metadata", controls: "controls" %>
+    <%= video_tag episode.media_url, id: "video-player-#{uid}", preload: "metadata", controls: "controls" %>
   <% else %>
-    <p class="text-center"><a href="<%= media_url %>">Media File&nbsp;(<%= File.extname(media_url) %>)</a></p>
+    <p class="text-center"><a href="<%= episode.media_url %>">Media File&nbsp;(<%= File.extname(episode.media_url) %>)</a></p>
   <% end %>
 <% else %>
   <p class="text-center">Oh noes! Couldn't figure out media url!</p>

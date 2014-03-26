@@ -11,7 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140325172150) do
+ActiveRecord::Schema.define(version: 20140326160401) do
+
+  create_table "episodes", force: true do |t|
+    t.string   "uid"
+    t.string   "title"
+    t.string   "author"
+    t.string   "link_url"
+    t.text     "summary"
+    t.text     "content"
+    t.string   "image_url"
+    t.string   "media_url"
+    t.datetime "publish_date"
+    t.integer  "podcast_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "podcasts", force: true do |t|
     t.string   "feed_url"
