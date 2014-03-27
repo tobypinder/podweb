@@ -7,12 +7,12 @@ class PodcastsController < ApplicationController
   before_filter :validate_podcast, only: [ :create ]
 
   def index
-    @podcasts = Podcast.all.sort_by { |podcast| podcast.title.sub(/^(the|a|an)\s+/i, '') }.paginate(page: params[:page], per_page: 10)
+    @podcasts = Podcast.all.sort_by { |podcast| podcast.title.sub(/^(the|a|an)\s+/i, '') }.paginate(page: params[:page], per_page: 5)
   end
 
   def show
     @podcast = Podcast.find(params[:id])
-    @episodes = @podcast.episodes.paginate(page: params[:page], per_page: 3)
+    @episodes = @podcast.episodes.sort_by { |episode| episode.published }.paginate(page: params[:page], per_page: 3)
   end
 
   def create
