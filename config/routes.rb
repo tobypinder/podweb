@@ -1,6 +1,7 @@
 Podweb::Application.routes.draw do
   root :to => "home#index"
-  resources :users, :only => [ :show, :edit, :update ]
+  resources :users, only: [ :show, :edit, :update ]
+  resources :watched_episodes, only: [ :create ]
   resources :podcasts
   get '/auth/:provider/callback' => 'sessions#create'
   get '/signin' => 'sessions#new', :as => :signin

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140326160401) do
+ActiveRecord::Schema.define(version: 20140327001236) do
 
   create_table "episodes", force: true do |t|
     t.string   "uid"
@@ -54,5 +54,16 @@ ActiveRecord::Schema.define(version: 20140326160401) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "watched_episodes", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "episode_id"
+    t.integer  "seconds_seen"
+    t.boolean  "watched",      default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "watched_episodes", ["user_id", "episode_id"], name: "index_watched_episodes_on_user_id_and_episode_id", unique: true
 
 end

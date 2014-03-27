@@ -2,7 +2,7 @@
   <div class="col-md-8 col-md-offset-2">
     <h2 class="text-center"><%= @podcast.title %></h2>
     <br />
-    <%= render partial: 'episode', collection: @episodes %>
+    <%= render @episodes %>
     <div class="pagination-holder"><%= will_paginate @episodes %></div>
   </div>
 </div>
