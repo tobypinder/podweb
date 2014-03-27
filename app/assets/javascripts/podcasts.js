@@ -4,8 +4,8 @@
       currentTime = parseInt($(this)[0].currentTime);
       epid = $(this).data('epid');
       $('#timecode' + epid).val(currentTime);
-      if ( (currentTime % 30 == 0) && (currentTime != 0) ) {
-        $('#new_watched_episode' + epid).submit();
+      if ( (currentTime % 10 == 0) && (currentTime != 0) ) {
+        setTimeout(function(){ $('#new_watched_episode' + epid).submit(); }, 1000);
       }
     });
   });
