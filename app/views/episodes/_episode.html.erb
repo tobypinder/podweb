@@ -1,6 +1,10 @@
 <%
-  watched_episode = WatchedEpisode.find_by(user_id: current_user.id, episode_id: episode.id)
-  media_element_url = watched_episode ? "#{episode.media_url}#t=#{watched_episode.seconds_seen}" : media_element_url = episode.media_url
+  if user_signed_in?
+    watched_episode = WatchedEpisode.find_by(user_id: current_user.id, episode_id: episode.id)
+    media_element_url = watched_episode ? "#{episode.media_url}#t=#{watched_episode.seconds_seen}" : media_element_url = episode.media_url
+  else
+    media_element_url = episode.media_url
+  end
 %>
 <h3 class="text-center"><%= episode.title %></h3>
 <% if !episode.media_url.blank? %>
@@ -12,10 +16,12 @@
   <% else %>
     <p class="text-center"><a href="<%= episode.media_url %>">Media File&nbsp;(<%= File.extname(episode.media_url) %>)</a></p>
   <% end %>
-  <%= form_for WatchedEpisode.new, remote: true, html: { id: "new_watched_episode#{episode.id}" } do |f| %>
-    <%= f.hidden_field :user_id, value: current_user.id %>
-    <%= f.hidden_field :episode_id, value: episode.id %>
-    <%= f.hidden_field :seconds_seen, id: "timecode#{episode.id}" %>
+  <% if user_signed_in? %>
+    <%= form_for WatchedEpisode.new, remote: true, html: { id: "new_watched_episode#{episode.id}" } do |f| %>
+      <%= f.hidden_field :user_id, value: current_user.id %>
+      <%= f.hidden_field :episode_id, value: episode.id %>
+      <%= f.hidden_field :seconds_seen, id: "timecode#{episode.id}" %>
+    <% end %>
   <% end %>
 <% else %>
   <p class="text-center">Oh noes! Couldn't figure out media url!</p>
