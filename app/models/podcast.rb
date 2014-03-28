@@ -10,9 +10,10 @@ class Podcast < ActiveRecord::Base
 
 
   def save_details
-    self.raw_feed = Feedjira::Feed.fetch_raw self.feed_url
-
     Feedjira::Feed.add_common_feed_element("itunes:image", :value => :href, :as => :album_art_url)
+
+    self.raw_feed = Feedjira::Feed.fetch_raw self.feed_url
+    feed = Feedjira::Feed.parse self.raw_feed
 
     self.album_art_url = feed.album_art_url
     self.title = feed.title
