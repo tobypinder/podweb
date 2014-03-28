@@ -7,7 +7,7 @@
     <h2 class="text-center"><%= date %></h2>
     <hr />
     <div class="panel-group" id="accordion">
-      <%= render partial: 'collapse_episode', collection: episode_list %>
+      <%= render partial: 'collapse_episode', collection: episode_list, as: :episode %>
     </div>
   <% end %>
   <div class="pagination-holder"><%= will_paginate @episode_list_by_day %></div>
