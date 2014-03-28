@@ -2,6 +2,7 @@ class Podcast < ActiveRecord::Base
   validates_presence_of :feed_url
 
   before_save :save_details
+  after_save :save_episodes
   after_find :update_details
 
   has_many :episodes
@@ -21,6 +22,10 @@ class Podcast < ActiveRecord::Base
     self.title = feed.title
     self.description = feed.description
     self.url = feed.url
+    self.updated_at = DateTime.now
+  end
+
+  def save_episodes
     feed.entries.each do |entry|
       episode = self.episodes.find_or_create_by(uid: entry.entry_id)
       episode.uid = entry.entry_id
@@ -40,8 +45,6 @@ class Podcast < ActiveRecord::Base
       episode.publish_date = entry.published
       episode.save
     end
-
-    self.updated_at = DateTime.now
   end
 
   def update_details

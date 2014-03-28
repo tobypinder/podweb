@@ -4,5 +4,7 @@
   <%= render 'shared/feed_subscribe' %>
   <br />
 <% end %>
-<%= render @podcasts %>
+<div class="row">
+  <%= render @podcasts %>
+</div>
 <div class="pagination-holder"><%= will_paginate @podcasts %></div>

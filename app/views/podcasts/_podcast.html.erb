@@ -1,32 +1,20 @@
-<div class="row">
-  <div class="col-md-8 col-md-offset-2">
-
-    <div class="row">
-
-      <div class="col-md-2">
-        <%= link_to image_tag(podcast.album_art_url), podcast %>
-      </div>
-
-      <div class="col-md-7">
-        <h4><%= link_to podcast.title, podcast %></h4>
-        <p class="text-muted"><strong>Latest Episode</strong>&nbsp;<%= podcast.episodes.first.title %></p>
-      </div>
-
-      <div class="col-md-3">
-        <% if user_signed_in? %>
-          <% if current_user.podcasts.include?(podcast) %>
-            <%= link_to podcast, method: :delete, data: { confirm: "Unsubscribe?" } do %>
-              <button type="button" class="btn btn-danger center-block">Unsubscribe</button>
-            <% end %>
-          <% else %>
-            <%= link_to podcasts_path(podcast: { feed_url: podcast.feed_url }), method: :post do %>
-              <button type="button" class="btn btn-success center-block">Subscribe</button>
-            <% end %>
+<div class="podcast col-xs-6 col-sm-4 col-md-3 col-lg-2">
+  <div class="thumbnail">
+    <%= link_to image_tag(podcast.album_art_url), podcast %>
+    <div class="caption">
+      <h4 class="text-center"><%= link_to podcast.title, podcast %></h4>
+      <p class="text-muted"><strong>Latest Episode</strong>&nbsp;<%= podcast.episodes.first.title %></p>
+      <% if user_signed_in? %>
+        <% if current_user.podcasts.include?(podcast) %>
+          <%= link_to podcast, method: :delete, data: { confirm: "Unsubscribe?" } do %>
+            <button type="button" class="btn btn-danger btn-block">Unsubscribe</button>
+          <% end %>
+        <% else %>
+          <%= link_to podcasts_path(podcast: { feed_url: podcast.feed_url }), method: :post do %>
+            <button type="button" class="btn btn-success btn-block">Subscribe</button>
           <% end %>
         <% end %>
-      </div>
-
+      <% end %>
     </div>
-
   </div>
 </div>

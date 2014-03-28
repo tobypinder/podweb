@@ -36,13 +36,15 @@ video {
   height: 100%;
 }
 
-a {
-  .well {
-    color: $gray-dark;
-  }
-  &:hover {
-    color: $gray-dark;
-    text-decoration: none;
+.podcast {
+  a {
+    .well {
+      color: $gray-dark;
+    }
+    &:hover {
+      color: $gray-dark;
+      text-decoration: none;
+    }
   }
 }
 
