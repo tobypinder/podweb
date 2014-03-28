@@ -13,10 +13,6 @@ class Podcast < ActiveRecord::Base
     self.raw_feed = Feedjira::Feed.fetch_raw self.feed_url
 
     Feedjira::Feed.add_common_feed_element("itunes:image", :value => :href, :as => :album_art_url)
-    Feedjira::Feed.add_common_feed_entry_element("enclosure", :value => :url, :as => :enclosure_url)
-    Feedjira::Feed.add_common_feed_entry_element("itunes:image", :value => :href, :as => :image)
-
-    feed = Feedjira::Feed.parse self.raw_feed
 
     self.album_art_url = feed.album_art_url
     self.title = feed.title
@@ -26,6 +22,10 @@ class Podcast < ActiveRecord::Base
   end
 
   def save_episodes
+    Feedjira::Feed.add_common_feed_entry_element("enclosure", :value => :url, :as => :enclosure_url)
+    Feedjira::Feed.add_common_feed_entry_element("itunes:image", :value => :href, :as => :image)
+
+    feed = Feedjira::Feed.parse self.raw_feed
     feed.entries.each do |entry|
       episode = self.episodes.find_or_create_by(uid: entry.entry_id)
       episode.uid = entry.entry_id
