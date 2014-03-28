@@ -11,5 +11,12 @@
         $('#new_watched_episode' + epid).submit();
       }
     });
+
+    $('.podcast').each(function(index, podcast) {
+      if ((index + 1) % 2 == 0) { $(podcast).after('<div class="clearfix visible-xs"></div>') };
+      if ((index + 1) % 3 == 0) { $(podcast).after('<div class="clearfix visible-sm"></div>') };
+      if ((index + 1) % 4 == 0) { $(podcast).after('<div class="clearfix visible-md"></div>') };
+      if ((index + 1) % 6 == 0) { $(podcast).after('<div class="clearfix visible-lg"></div>') };
+    });
   });
 })(jQuery);

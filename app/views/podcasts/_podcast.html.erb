@@ -3,7 +3,7 @@
     <%= link_to image_tag(podcast.album_art_url), podcast %>
     <div class="caption">
       <h4 class="text-center"><%= link_to podcast.title, podcast %></h4>
-      <p class="text-muted"><strong>Latest Episode</strong>&nbsp;<%= podcast.episodes.first.title %></p>
+      <p class="text-muted"><strong>Latest Episode</strong> <%= podcast.episodes.first.title %></p>
       <% if user_signed_in? %>
         <% if current_user.podcasts.include?(podcast) %>
           <%= link_to podcast, method: :delete, data: { confirm: "Unsubscribe?" } do %>
