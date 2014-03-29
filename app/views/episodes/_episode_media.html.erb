@@ -11,7 +11,7 @@
   <% when '.mp3' %>
     <%= audio_tag media_element_url, id: "audio-player-episode#{episode.id}", controls: "controls", data: { epid: episode.id } %>
   <% when '.mp4', '.m4v' %>
-    <%= video_tag media_element_url, id: "video-player-episode#{episode.id}", preload: "metadata", controls: "controls", data: { epid: episode.id } %>
+    <%= video_tag media_element_url, id: "video-player-episode#{episode.id}", controls: "controls", data: { epid: episode.id } %>
   <% else %>
     <p class="text-center"><a href="<%= episode.media_url %>">Media File&nbsp;(<%= File.extname(episode.media_url) %>)</a></p>
   <% end %>
