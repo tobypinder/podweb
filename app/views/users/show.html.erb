@@ -9,6 +9,7 @@
       <%= render podcast %>
     <% end %>
   </div>
+  <div class="pagination-holder"><%= will_paginate @podcasts %></div>
 <% else %>
   <h4 class="text-center">
     Looks like you haven't subscribed to any podcasts yet, just paste an rss
