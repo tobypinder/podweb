@@ -2,11 +2,17 @@
 <br />
 <%= render'shared/feed_subscribe' %>
 
-<% if @user.podcasts.any? %>
+<% if @podcasts.any? %>
   <h2 class="text-center">Subscriptions</h2>
   <div class="row">
-    <% @user.podcasts.sort_by { |podcast| podcast.title.sub(/^(the|a|an)\s+/i, '') }.each do |podcast| %>
+    <% @podcasts.each do |podcast| %>
       <%= render podcast %>
     <% end %>
   </div>
+<% else %>
+  <h4 class="text-center">
+    Looks like you haven't subscribed to any podcasts yet, just paste an rss
+    link above or <%= link_to 'browse the podcast library', podcasts_path %>
+    to add some to your list.
+  </h4>
 <% end %>
