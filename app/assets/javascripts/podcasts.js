@@ -1,16 +1,23 @@
 (function($) {
   $(document).ready(function() {
-    last_update = new Date();
-    $('audio, video').on('timeupdate', function(event) {
-      currentTime = parseInt($(this)[0].currentTime);
-      epid = $(this).data('epid');
-      now = new Date();
-      $('#timecode' + epid).val(currentTime);
-      if ( (currentTime != 0) && (currentTime % 10 == 0) && (now - last_update > 1000)) {
-        last_update = new Date();
-        $('#new_watched_episode' + epid).submit();
-      }
-    });
+    var last_update = new Date();
+    var current_epid;
+    var currentTime;
+    var endTime;
+
+    if ('#playlist-player') {
+      setPlayerEpisode($('#media-playlist tr').first());
+      $('#media-playlist tr').click(function(event) {
+        event.preventDefault();
+        $('tr[data-epid="' + current_epid + '"').removeClass('active');
+        if (currentTime < 1) {
+          $('tr[data-epid="' + current_epid + '"').addClass('info');
+        } else if (endTime - currentTime > 15) {
+          $('tr[data-epid="' + current_epid + '"').addClass('warning');
+        }
+        setPlayerEpisode($(this));
+      });
+    }
 
     $('.podcast').each(function(index, podcast) {
       if ((index + 1) % 2 == 0) { $(podcast).after('<div class="clearfix visible-xs"></div>') };
@@ -18,5 +25,63 @@
       if ((index + 1) % 4 == 0) { $(podcast).after('<div class="clearfix visible-md"></div>') };
       if ((index + 1) % 6 == 0) { $(podcast).after('<div class="clearfix visible-lg"></div>') };
     });
+
+    $('audio, video').on('loadstart', function(event) {
+      currentTime = 0;
+      current_epid = $(this).attr('data-epid');
+    });
+
+    $('audio, video').on('timeupdate', function(event) {
+      var now = new Date();
+
+      currentTime = parseInt($(this)[0].currentTime);
+      endTime = parseInt($(this)[0].duration);
+
+      setTimeFormInfo(currentTime, endTime, current_epid);
+
+      if ( (currentTime != 0) && (currentTime % 10 == 0) && (now - last_update > 1000)) {
+        last_update = new Date();
+        $('#new_watched_episode' + current_epid).submit();
+      }
+    });
   });
+
+  function setPlayerEpisode(episodeLink) {
+    var epid = episodeLink.attr('data-epid');
+
+    episodeLink.removeClass('warning info');
+    episodeLink.addClass('active');
+
+    $('#episode_summary').attr('data-target', '#full-entry-episode' + epid);
+    $('#episode_summary div.well').html(episodeLink.attr('data-shortsummary'));
+
+    $('#episode_description div.modal').attr({
+      id: 'full-entry-episode' + epid,
+      'aria-labelledby': 'modal-label-episode' + epid
+    });
+    $('#episode_description h4.modal-title').attr('id', 'modal-label-episode' + epid);
+    $('#episode_description h4.modal-title').html(episodeLink.children('.episode-title').html());
+    $('#episode_description div.modal-body').html(episodeLink.attr('data-longsummary'));
+
+    $('form').attr('id', 'new_watched_episode' + epid);
+    $('form input:nth-last-child(2)').val(epid);
+    $('form input:nth-last-child(1)').attr('id', 'timecode' + epid);
+
+    $('#playlist-player').attr('data-epid', epid);
+    $('#playlist-player').attr('src', episodeLink.attr('data-mediaurl'));
+    $('#playlist-player').load();
+  }
+
+  function setTimeFormInfo(currentTime, endTime, current_epid) {
+    if (endTime - currentTime < 15) {
+      $('input#watched_episode_watched').val("true");
+    } else {
+      $('input#watched_episode_watched').val("false");
+    }
+    $('input#timecode' + current_epid).val(currentTime);
+  }
+
+  function resetEpisodeStatusColor(current_epid, currentTime, endTime) {
+
+  }
 })(jQuery);

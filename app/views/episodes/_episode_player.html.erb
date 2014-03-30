@@ -1,0 +1,6 @@
+<%= video_tag "", id: "playlist-player", controls: "controls" %>
+<%= form_for WatchedEpisode.new, remote: true do |f| %>
+  <%= f.hidden_field :watched, value: "false" %>
+  <%= f.hidden_field :episode_id %>
+  <%= f.hidden_field :seconds_seen%>
+<% end %>

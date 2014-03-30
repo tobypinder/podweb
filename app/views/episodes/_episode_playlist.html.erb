@@ -1,0 +1,29 @@
+<div id="media-playlist">
+  <table class="table">
+    <% episode_list.each do |episode| %>
+      <% if user_signed_in? %>
+        <% watched_episode = WatchedEpisode.find_by(user_id: current_user.id, episode_id: episode.id) %>
+        <% if watched_episode %>
+          <% media_element_url = "#{episode.media_url}#t=#{watched_episode.seconds_seen}" %>
+          <% if watched_episode.watched %>
+            <% episode_status = "" %>
+          <% elsif watched_episode.seconds_seen > 0 %>
+            <% episode_status = "warning" %>
+          <% end %>
+        <% else %>
+          <% media_element_url = episode.media_url %>
+          <% episode_status = "info" %>
+        <% end %>
+      <% else %>
+        <% media_element_url = episode.media_url %>
+        <% episode_status = "info" %>
+      <% end %>
+      <tr class="<%= episode_status %>" data-epid="<%= episode.id %>" data-mediaurl="<%= media_element_url %>" data-shortsummary="<%= truncate(strip_tags(episode.summary), length: 250) %>" data-longsummary="<%= episode.summary %>">
+        <td class="text-center"><%= episode.publish_date.strftime "%A, %B #{episode.publish_date.day.ordinalize} %l:%M %p" %></td>
+        <td class="episode-title"><%= episode.title %><td>
+        <td><%= episode.podcast.title %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+<div class="pagination-holder"><%= will_paginate episode_list %></div>

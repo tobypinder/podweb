@@ -1,16 +1,12 @@
 <% if user_signed_in? %>
   <h1 class="text-center">Hey look, you're signed in!</h1>
-  <h3 class="text-center text-muted">Here's a list of episodes from your subscribed podcasts, sorted by day</h3>
+  <h3 class="text-center text-muted">Here's the latest episodes from your subscribed podcasts.</h3>
   <br />
-  <% @episode_list_by_day.each do |date, episode_list| %>
-    <hr />
-    <h2 class="text-center"><%= date %></h2>
-    <hr />
-    <div class="panel-group" id="accordion">
-      <%= render partial: 'collapse_episode', collection: episode_list, as: :episode %>
-    </div>
-  <% end %>
-  <div class="pagination-holder"><%= will_paginate @episode_list_by_day %></div>
+  <div class="row">
+    <%= render partial: 'episodes/episode_player' %>
+    <%= render partial: 'episodes/episode_description' %>
+    <%= render partial: 'episodes/episode_playlist', locals: { episode_list: @episode_list } %>
+  </div>
 <% else %>
   <h2 class="text-center">Welcome to Podweb</h2>
   <br />

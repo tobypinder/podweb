@@ -12,7 +12,7 @@ class PodcastsController < ApplicationController
 
   def show
     @podcast = Podcast.find(params[:id])
-    @episodes = @podcast.episodes.sort_by { |episode| episode.publish_date }.reverse.paginate(page: params[:page], per_page: 1)
+    @episodes = @podcast.episodes.sort_by { |episode| episode.publish_date }.reverse.paginate(page: params[:page], per_page: 10)
   end
 
   def create

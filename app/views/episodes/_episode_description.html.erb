@@ -1,20 +1,20 @@
-<a data-toggle="modal" data-target="#full-entry-episode<%= episode.id %>">
-  <div class="well"><%= truncate(strip_tags(episode.summary), length: 250) %></div>
-</a>
+<div id="episode_description">
+  <a data-toggle="modal" id="episode_summary">
+    <div class="well"></div>
+  </a>
 
-<!-- Modal -->
-<div class="modal fade" id="full-entry-episode<%= episode.id %>" tabindex="-1" role="dialog" aria-labelledby="modal-label-episode<%= episode.id %>" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="modal-label-episode<%= episode.id %>"><%= episode.title %></h4>
-      </div>
-      <div class="modal-body">
-        <%= raw episode.summary %>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  <!-- Modal -->
+  <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>

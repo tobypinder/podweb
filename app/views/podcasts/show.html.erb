@@ -3,8 +3,9 @@
     <h2 class="text-center"><%= @podcast.title %></h2>
     <br />
     <div class="row">
-      <%= render @episodes %>
+      <%= render partial: 'episodes/episode_player' %>
+      <%= render partial: 'episodes/episode_description' %>
+      <%= render partial: 'episodes/episode_playlist', locals: { episode_list: @episodes } %>
     </div>
-    <div class="pagination-holder"><%= will_paginate @episodes %></div>
   </div>
 </div>
