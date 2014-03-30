@@ -1,4 +1,8 @@
 (function($) {
+
+})(jQuery);
+
+(function($) {
   $(document).ready(function() {
     var last_update = new Date();
     var current_epid;
@@ -31,16 +35,19 @@
       current_epid = $(this).attr('data-epid');
     });
 
+    $('audio, video').on('durationchange', function(event) {
+      endTime = parseInt($(this)[0].duration);
+      currentTime = parseInt($(this)[0].currentTime);
+    });
+
     $('audio, video').on('timeupdate', function(event) {
       var now = new Date();
-
       currentTime = parseInt($(this)[0].currentTime);
-      endTime = parseInt($(this)[0].duration);
-
       setTimeFormInfo(currentTime, endTime, current_epid);
 
-      if ( (currentTime != 0) && (currentTime % 10 == 0) && (now - last_update > 1000)) {
+      if ( ((currentTime != 0) && (currentTime % 10 == 0) && (now - last_update > 1000)) || ($(this)[0].ended || $(this)[0].paused) ) {
         last_update = new Date();
+        $('tr[data-epid="' + current_epid + '"').attr('data-mediaurl', $(this).attr('src').replace(/#t=./, '') + '#t=' + currentTime );
         $('#new_watched_episode' + current_epid).submit();
       }
     });
@@ -81,7 +88,15 @@
     $('input#timecode' + current_epid).val(currentTime);
   }
 
-  function resetEpisodeStatusColor(current_epid, currentTime, endTime) {
+  $.fn.changeElementType = function(newType) {
+    var attrs = {};
 
-  }
+    $.each(this[0].attributes, function(idx, attr) {
+      attrs[attr.nodeName] = attr.nodeValue;
+    });
+
+    this.replaceWith(function() {
+      return $("<" + newType + "/>", attrs).append($(this).contents());
+    });
+  };
 })(jQuery);
