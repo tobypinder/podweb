@@ -40,6 +40,10 @@
       currentTime = parseInt($(this)[0].currentTime);
     });
 
+    $('audio, video').on('loadeddata', function(event) {
+      currentTime = parseInt($(this)[0].currentTime);
+    });
+
     $('audio, video').on('timeupdate', function(event) {
       var now = new Date();
       currentTime = parseInt($(this)[0].currentTime);
