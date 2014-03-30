@@ -47,7 +47,7 @@
 
       if ( ((currentTime != 0) && (currentTime % 10 == 0) && (now - last_update > 1000)) || ($(this)[0].ended || $(this)[0].paused) ) {
         last_update = new Date();
-        $('tr[data-epid="' + current_epid + '"').attr('data-mediaurl', $(this).attr('src').replace(/#t=./, '') + '#t=' + currentTime );
+        $('tr[data-epid="' + current_epid + '"').attr('data-mediaurl', $(this).attr('src').replace(/#t=.*/, '') + '#t=' + currentTime );
         $('#new_watched_episode' + current_epid).submit();
       }
     });
