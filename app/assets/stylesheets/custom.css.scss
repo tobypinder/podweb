@@ -48,6 +48,10 @@ a {
   }
 }
 
+td.podcast-title {
+  width: 25%;
+}
+
 .pagination-holder {
   @extend .center-block;
   @extend .text-center;
