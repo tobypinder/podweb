@@ -20,15 +20,6 @@
       <% end %>
       <tr class="<%= episode_status %>" data-epid="<%= episode.id %>" data-mediaurl="<%= media_element_url %>" data-shortsummary="<%= truncate(strip_tags(episode.summary), length: 250) %>" data-longsummary="<%= episode.summary %>">
         <td class="text-center"><%= episode.publish_date.strftime "%A, %B #{episode.publish_date.day.ordinalize} %l:%M %p" %></td>
-        <td class="text-center">
-          <% if episode_status == "info" %>
-            <span class="label label-primary">Unwatched</span>
-          <% elsif episode_status == "warning" %>
-            <span class="label label-warning">Some Watched</span>
-          <% else %>
-            <span class="label label-default">Watched</span>
-          <% end %>
-        </td>
         <td class="episode-title"><%= episode.title %><td>
         <td><%= episode.podcast.title %></td>
       </tr>

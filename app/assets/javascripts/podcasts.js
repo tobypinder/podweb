@@ -10,15 +10,10 @@
       $('#media-playlist tr').click(function(event) {
         event.preventDefault();
         $('tr[data-epid="' + current_epid + '"]').removeClass('active');
-        $('tr[data-epid="' + current_epid + '"] span.label').removeClass('label-primary label-warning label-default');
         if (currentTime < 1) {
           $('tr[data-epid="' + current_epid + '"]').addClass('info');
-          $('tr[data-epid="' + current_epid + '"] span.label').addClass('label-primary').html('Unwatched');
         } else if (endTime - currentTime > 15) {
           $('tr[data-epid="' + current_epid + '"]').addClass('warning');
-          $('tr[data-epid="' + current_epid + '"] span.label').addClass('label-warning').html('Some Watched');
-        } else {
-          $('tr[data-epid="' + current_epid + '"] span.label').addClass('label-default').html('Watched');
         }
         setPlayerEpisode($(this));
       });
@@ -48,13 +43,7 @@
     $('audio, video').on('timeupdate', function(event) {
       var now = new Date();
       currentTime = parseInt($(this)[0].currentTime);
-
-      if (endTime - currentTime < 15) {
-        $('input#watched_episode_watched').val("true");
-      } else {
-        $('input#watched_episode_watched').val("false");
-      }
-      $('input#timecode' + current_epid).val(currentTime);
+      setTimeFormInfo(currentTime, endTime, current_epid);
 
       if ( ((currentTime != 0) && (currentTime % 10 == 0) && (now - last_update > 1000)) || ($(this)[0].ended || $(this)[0].paused) ) {
         last_update = new Date();
@@ -66,7 +55,6 @@
 
   function setPlayerEpisode(episodeLink) {
     var epid = episodeLink.attr('data-epid');
-    var file_type = episodeLink.attr('data-mediaurl').replace(/#t=.*/, '');
 
     episodeLink.removeClass('warning info');
     episodeLink.addClass('active');
@@ -86,16 +74,18 @@
     $('form input:nth-last-child(2)').val(epid);
     $('form input:nth-last-child(1)').attr('id', 'timecode' + epid);
 
-
-    file_type = file_type.substr(file_type.lastIndexOf('.') +1);
-    if (file_type == 'mp3') {
-      $('#playlist-player').changeElementType('audio');
-    } else {
-      $('#playlist-player').changeElementType('video');
-    }
     $('#playlist-player').attr('data-epid', epid);
     $('#playlist-player').attr('src', episodeLink.attr('data-mediaurl'));
     $('#playlist-player').load();
+  }
+
+  function setTimeFormInfo(currentTime, endTime, current_epid) {
+    if (endTime - currentTime < 15) {
+      $('input#watched_episode_watched').val("true");
+    } else {
+      $('input#watched_episode_watched').val("false");
+    }
+    $('input#timecode' + current_epid).val(currentTime);
   }
 
   $.fn.changeElementType = function(newType) {
