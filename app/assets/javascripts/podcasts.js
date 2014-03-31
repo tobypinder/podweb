@@ -10,10 +10,15 @@
       $('#media-playlist tr').click(function(event) {
         event.preventDefault();
         $('tr[data-epid="' + current_epid + '"]').removeClass('active');
+        $('tr[data-epid="' + current_epid + '"] span.label').removeClass('label-primary label-warning label-default');
         if (currentTime < 1) {
           $('tr[data-epid="' + current_epid + '"]').addClass('info');
+          $('tr[data-epid="' + current_epid + '"] span.label').addClass('label-primary').html('Unwatched');
         } else if (endTime - currentTime > 15) {
           $('tr[data-epid="' + current_epid + '"]').addClass('warning');
+          $('tr[data-epid="' + current_epid + '"] span.label').addClass('label-warning').html('Watched Some');
+        } else {
+          $('tr[data-epid="' + current_epid + '"] span.label').addClass('label-default').html('Watched');
         }
         setPlayerEpisode($(this));
       });
@@ -87,16 +92,4 @@
     }
     $('input#timecode' + current_epid).val(currentTime);
   }
-
-  $.fn.changeElementType = function(newType) {
-    var attrs = {};
-
-    $.each(this[0].attributes, function(idx, attr) {
-      attrs[attr.nodeName] = attr.nodeValue;
-    });
-
-    this.replaceWith(function() {
-      return $("<" + newType + "/>", attrs).append($(this).contents());
-    });
-  };
 })(jQuery);
