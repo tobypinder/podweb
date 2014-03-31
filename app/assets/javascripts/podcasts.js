@@ -48,7 +48,13 @@
     $('audio, video').on('timeupdate', function(event) {
       var now = new Date();
       currentTime = parseInt($(this)[0].currentTime);
-      setTimeFormInfo(currentTime, endTime, current_epid);
+      
+      if (endTime - currentTime < 15) {
+        $('input#watched_episode_watched').val("true");
+      } else {
+        $('input#watched_episode_watched').val("false");
+      }
+      $('input#timecode' + current_epid).val(currentTime);
 
       if ( ((currentTime != 0) && (currentTime % 10 == 0) && (now - last_update > 1000)) || ($(this)[0].ended || $(this)[0].paused) ) {
         last_update = new Date();
@@ -82,14 +88,5 @@
     $('#playlist-player').attr('data-epid', epid);
     $('#playlist-player').attr('src', episodeLink.attr('data-mediaurl'));
     $('#playlist-player').load();
-  }
-
-  function setTimeFormInfo(currentTime, endTime, current_epid) {
-    if (endTime - currentTime < 15) {
-      $('input#watched_episode_watched').val("true");
-    } else {
-      $('input#watched_episode_watched').val("false");
-    }
-    $('input#timecode' + current_epid).val(currentTime);
   }
 })(jQuery);
