@@ -1,5 +1,5 @@
 <div id="media-playlist">
-  <table class="table">
+  <table class="table table-hover">
     <% episode_list.each do |episode| %>
       <% if user_signed_in? %>
         <% watched_episode = WatchedEpisode.find_by(user_id: current_user.id, episode_id: episode.id) %>
