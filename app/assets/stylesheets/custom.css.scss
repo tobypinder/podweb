@@ -45,11 +45,18 @@ a {
   &:hover {
     color: $gray-dark;
     text-decoration: none;
+    cursor: pointer;
   }
 }
-
-td.podcast-title {
-  width: 25%;
+#media-playlist {
+  tr {
+    &:hover {
+      cursor: pointer;
+    }
+    td.podcast-title {
+      width: 25%;
+    }
+  }
 }
 
 .pagination-holder {
