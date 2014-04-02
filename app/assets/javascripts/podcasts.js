@@ -1,10 +1,27 @@
 (function($) {
-  $(document).ready(function() {
-    var last_update = new Date();
-    var current_epid;
-    var currentTime;
-    var endTime;
+  $.fn.changeElementType = function(newType) {
+    this.each(function() {
+      var attrs = {};
 
+      $.each(this.attributes, function(idx, attr) {
+        attrs[attr.nodeName] = attr.nodeValue;
+      });
+
+      $(this).replaceWith(function() {
+        return $("<" + newType + "/>", attrs).append($(this).contents());
+      });
+    });
+  };
+})(jQuery);
+
+(function($) {
+
+  var last_update = new Date();
+  var current_epid;
+  var currentTime;
+  var endTime;
+
+  $(document).ready(function() {
     // When clicking a playlist item
     $('#media-playlist tr').click(function(event) {
       event.preventDefault();
@@ -39,28 +56,57 @@
       $('form input:nth-last-child(1)').attr('id', 'timecode' + epid);
       $('#playlist-player').attr('data-epid', epid);
       $('#playlist-player').attr('src', $(this).attr('data-mediaurl'));
+
+      var file_string = $(this).attr('data-mediaurl');
+      var extension = file_string.match(/^[^\s]+\.([mpovgwebm43]{3,4})(?:#t=\d+)?$/i)[1];
+      if (extension == 'mp3') {
+        if ($('#playlist-player').is('video')) {
+          $('#playlist-player').changeElementType('audio');
+          resetMediaEventHandlers();
+        }
+      } else if ($('#playlist-player').is('audio')) {
+        $('#playlist-player').changeElementType('video');
+        resetMediaEventHandlers();
+      }
+
       $('#playlist-player').load();
     });
 
+    // Load player with first video in playlist
+    if ('#playlist-player') {
+      $('#media-playlist tr').first().trigger('click');
+      resetMediaEventHandlers();
+    }
+
+    // For multiple podcast displays (library, subscriptions) insert breaks depending on device size
+    $('.podcast').each(function(index, podcast) {
+      if ((index + 1) % 2 == 0) { $(podcast).after('<div class="clearfix visible-xs"></div>') };
+      if ((index + 1) % 3 == 0) { $(podcast).after('<div class="clearfix visible-sm"></div>') };
+      if ((index + 1) % 4 == 0) { $(podcast).after('<div class="clearfix visible-md"></div>') };
+      if ((index + 1) % 6 == 0) { $(podcast).after('<div class="clearfix visible-lg"></div>') };
+    });
+  });
+
+  function resetMediaEventHandlers() {
     // When starting to load a new media file, reset current time and episode id
-    $('audio, video').on('loadstart', function(event) {
+    $('audio, video').off('loadstart').on('loadstart', function(event) {
       currentTime = 0;
       current_epid = $(this).attr('data-epid');
     });
 
     // When we have updated info for end and current times, update that info
-    $('audio, video').on('durationchange', function(event) {
+    $('audio, video').off('durationchange').on('durationchange', function(event) {
       endTime = parseInt($(this)[0].duration);
       currentTime = parseInt($(this)[0].currentTime);
     });
 
     // When we've loaded the media file, make sure current time is correct
-    $('audio, video').on('loadeddata', function(event) {
+    $('audio, video').off('loadeddata').on('loadeddata', function(event) {
       currentTime = parseInt($(this)[0].currentTime);
     });
 
     // Trigger update and possibly storage of episode time information when player updates time
-    $('audio, video').on('timeupdate', function(event) {
+    $('audio, video').off('timeupdate').on('timeupdate', function(event) {
       var now = new Date();
       currentTime = parseInt($(this)[0].currentTime);
 
@@ -79,18 +125,5 @@
         $('#new_watched_episode' + current_epid).submit();
       }
     });
-
-    // Load player with first video in playlist
-    if ('#playlist-player') {
-      $('#media-playlist tr').first().trigger('click');
-    }
-
-    // For multiple podcast displays (library, subscriptions) insert breaks depending on device size
-    $('.podcast').each(function(index, podcast) {
-      if ((index + 1) % 2 == 0) { $(podcast).after('<div class="clearfix visible-xs"></div>') };
-      if ((index + 1) % 3 == 0) { $(podcast).after('<div class="clearfix visible-sm"></div>') };
-      if ((index + 1) % 4 == 0) { $(podcast).after('<div class="clearfix visible-md"></div>') };
-      if ((index + 1) % 6 == 0) { $(podcast).after('<div class="clearfix visible-lg"></div>') };
-    });
-  });
+  }
 })(jQuery);
