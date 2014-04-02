@@ -58,8 +58,8 @@
       $('#playlist-player').attr('src', $(this).attr('data-mediaurl'));
 
       var file_string = $(this).attr('data-mediaurl');
-      var extension = file_string.match(/^[^\s]+\.([mpovgwebm43]{3,4})(?:#t=\d+)?$/i)[1];
-      if (extension == 'mp3') {
+      var extension = file_string.match(/^[^\s]+\.([mpovgweba43]{3,4})(?:#t=\d+)?$/i)[1];
+      if (extension == 'mp3' || extension == 'ogg' || extension == 'm4a') {
         if ($('#playlist-player').is('video')) {
           $('#playlist-player').changeElementType('audio');
           resetMediaEventHandlers();
