@@ -13,4 +13,4 @@ Podweb makes use of the following:
 * [Omniauth](https://github.com/intridea/omniauth)
 * [Feedjira](https://github.com/feedjira/feedjira)
 
-And was generated with the [rails_apps_composer](https://github.com/RailsApps/rails_apps_composer) gem provided by the [RailsApps Project](http://railsapps.github.io/).
+And was generated with [Rails Composer](http://railsapps.github.io/rails-composer/).
