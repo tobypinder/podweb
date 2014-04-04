@@ -49,6 +49,6 @@ class Podcast < ActiveRecord::Base
   end
 
   def update_details
-    self.save if self.updated_at < (DateTime.now - 3.hours)
+    self.save if self.updated_at < (DateTime.now - 1.hour)
   end
 end
