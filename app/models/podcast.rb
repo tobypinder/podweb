@@ -49,6 +49,8 @@ class Podcast < ActiveRecord::Base
   end
 
   def update_details
-    self.save if self.updated_at < (DateTime.now - 1.hour)
+    if self.updated_at < (DateTime.now - 1.hour)
+      self.save if self.raw_feed != Feedjira::Feed.fetch_raw(self.feed_url)
+    end
   end
 end
