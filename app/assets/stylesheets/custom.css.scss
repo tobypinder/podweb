@@ -75,3 +75,7 @@ a {
     margin: ($footerHeight / 3) 0;
   }
 }
+
+a.selected {
+  font-weight: bold;
+}
