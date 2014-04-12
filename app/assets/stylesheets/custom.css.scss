@@ -24,6 +24,18 @@ nav.navbar {
   }
 }
 
+span.sort-options {
+  margin-top: 1.5em;
+  a.selected {
+    font-weight: bold;
+  }
+}
+
+hr.thin-hr {
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
 img {
   @extend .img-responsive;
   margin: 0 auto;
@@ -74,8 +86,4 @@ a {
   .container .text-muted {
     margin: ($footerHeight / 3) 0;
   }
-}
-
-a.selected {
-  font-weight: bold;
 }
