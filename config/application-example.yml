@@ -1,0 +1,14 @@
+# Rename to `application.yml` and modify.
+#
+# Add application configuration variables here, as shown below.
+# They will automatically be added to ENV locally, and will be
+# pushed to heroku when you locally exec `rake figaro:heroku`
+#
+SECRET_KEY_BASE: long_hex_string
+# Env specific, so you don't have to worry about HTTP wire pong from google -> dev endpoint. 
+development:
+  CLIENT_ID: stuff.apps.googleusercontent.com
+  CLIENT_SECRET: secret_token
+production:
+  CLIENT_ID: stuff.apps.googleusercontent.com
+  CLIENT_SECRET: secret_token

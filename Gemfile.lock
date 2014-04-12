@@ -78,6 +78,9 @@ GEM
       sax-machine (~> 0.2.1)
     feedvalidator (0.1.2)
     ffi (1.9.3)
+    figaro (0.7.0)
+      bundler (~> 1.0)
+      rails (>= 3, < 5)
     formatador (0.2.4)
     guard (2.6.0)
       formatador (>= 0.2.4)
@@ -262,6 +265,7 @@ DEPENDENCIES
   factory_girl_rails
   feedjira
   feedvalidator
+  figaro
   guard-bundler
   guard-rails
   guard-rspec

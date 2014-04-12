@@ -5,6 +5,21 @@
   <br />
 <% end %>
 <div class="row">
+  Sort by...
+  <%= link_to 'A-Z',      podcasts_path(sort: 'a-z'), class: (@sort_by == 'a-z') ? 'selected' : '' %> 
+  | 
+  <%= link_to 'Popular',  podcasts_path(sort: 'pop'), class: (@sort_by == 'pop') ? 'selected' : '' %> 
+</div>
+<hr />
+<div class="row">
+  <h4>
+    <%=
+    case @sort_by
+    when 'pop' then 'Popular Podcasts'
+    when 'a-z' then 'List of Podcasts'
+    end
+    %>
+  <h4>
   <%= render @podcasts %>
 </div>
 <div class="pagination-holder"><%= will_paginate @podcasts %></div>
