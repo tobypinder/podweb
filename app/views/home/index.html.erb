@@ -3,9 +3,16 @@
   <h3 class="text-center text-muted">Here's the latest episodes from your subscribed podcasts.</h3>
   <br />
   <div class="row">
-    <%= render partial: 'episodes/episode_player' %>
-    <%= render partial: 'episodes/episode_description' %>
-    <%= render partial: 'episodes/episode_playlist', locals: { episode_list: @episode_list } %>
+    <% if @episode_list.empty? %>
+      <h2 class="text-center">No episodes :(</h2>
+      <h4 class="text-center">I couldn't find any episodes for you. You should 
+        <%= link_to 'subscribe to some!', podcasts_path %>
+      </h4>
+    <% else %>
+      <%= render partial: 'episodes/episode_player' %>
+      <%= render partial: 'episodes/episode_description' %>
+      <%= render partial: 'episodes/episode_playlist', locals: { episode_list: @episode_list } %>
+    <% end %>
   </div>
 <% else %>
   <h2 class="text-center">Welcome to Podweb</h2>
